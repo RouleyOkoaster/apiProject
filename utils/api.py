@@ -1,3 +1,5 @@
+from requests import delete
+
 from utils.http_method import HttpMethods
 
 base_url = "https://rahulshettyacademy.com" # Базовая URL
@@ -73,6 +75,22 @@ class Google_maps_api():
         result_put = HttpMethods.put(put_url, json_for_udpate_location)
         print(result_put.text)
         return result_put
+
+    """Метод для удаления новой локации"""
+
+    @staticmethod
+    def delete_place(place_id):
+        delete_resource = "/maps/api/place/delete/json"  # Ресурс метода PUT
+
+        delete_url = base_url + delete_resource + key
+        print(delete_url)
+
+        json_for_udpate_location = {
+            "place_id": place_id
+        }
+        result_delete = HttpMethods.delete(delete_url, json_for_udpate_location)
+        print(result_delete.text)
+        return result_delete
 
 
 

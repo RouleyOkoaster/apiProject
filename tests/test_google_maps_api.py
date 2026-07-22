@@ -19,3 +19,10 @@ class TestCreatePlace():
 
         print("Method GET to check PUT")
         result_get = Google_maps_api.get_new_place(place_id)
+
+        print("Method DELETE")
+        result_delete = Google_maps_api.delete_place(place_id)
+
+        print("Method GET to check DELETE")
+        result_get = Google_maps_api.get_new_place(place_id)
+
