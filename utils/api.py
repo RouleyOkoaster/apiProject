@@ -1,4 +1,5 @@
 from requests import delete
+import allure
 
 from utils.http_method import HttpMethods
 
