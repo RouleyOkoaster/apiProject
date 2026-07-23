@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from utils.api import Google_maps_api
 from utils.checking import Checking
@@ -12,25 +14,76 @@ class TestCreatePlace():
         check_post = result_post.json()
         place_id = check_post.get('place_id')
 
+        token = {
+
+            "status": "OK",
+
+            "place_id": "dea036e58d6773b3f8bfb256249a1593",
+
+            "scope": "APP",
+
+            "reference": "1f71a23b1374071eecbb70eed1054cf91f71a23b1374071eecbb70eed1054cf9",
+
+            "id": "1f71a23b1374071eecbb70eed1054cf9"
+        }
+
         Checking.check_status_code(result_post, 200)
+        Checking.check_json_token(result_post, list(token))
+
 
         print("Method GET to check POST")
         result_get = Google_maps_api.get_new_place(place_id)
+
+        token = {
+
+                "location": {
+            
+                    "latitude": "-38.383494",
+            
+                    "longitude": "33.427362"
+            
+                },
+            
+                "accuracy": "50",
+            
+                "name": "Frontline house",
+            
+                "phone_number": "(+91) 983 893 3937",
+            
+                "address": "29, side layout, cohen 09",
+            
+                "types": "shoe park,shop",
+            
+                "website": "http://google.com",
+
+                "language": "French-IN"
+
+        }
+
         Checking.check_status_code(result_get, 200)
+        Checking.check_json_token(result_get, list(token))
 
         print("Method PUT")
         result_put = Google_maps_api.put_new_place(place_id)
         Checking.check_status_code(result_put, 200)
+        Checking.check_json_token(result_put, ["msg"])
 
         print("Method GET to check PUT")
         result_get = Google_maps_api.get_new_place(place_id)
+
         Checking.check_status_code(result_get, 200)
+        Checking.check_json_token(result_get, list(token))
 
         print("Method DELETE")
         result_delete = Google_maps_api.delete_place(place_id)
+
         Checking.check_status_code(result_delete, 200)
+        Checking.check_json_token(result_delete, ["status"])
 
         print("Method GET to check DELETE")
         result_get = Google_maps_api.get_new_place(place_id)
+
         Checking.check_status_code(result_get, 404)
+        Checking.check_json_token(result_get, ["msg"])
+
 
